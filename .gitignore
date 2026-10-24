@@ -1,0 +1,14 @@
+# Medios y salidas: nunca al repo
+*.mp4
+*.wav
+*.mp3
+*.png
+*.jpg
+media/
+__pycache__/
+wmodel/
+words_*.json
+plan.json
+cfg.json
+vl.txt
+vp*.mp4
