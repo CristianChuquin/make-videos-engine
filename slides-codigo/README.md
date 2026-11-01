@@ -10,6 +10,7 @@ Motor de la skill `slides-codigo`. Animación en HTML/SVG con GSAP; renderizado 
 |---|---|
 | `engine/runtime.js` | Motor `SC`: una línea de tiempo GSAP en pausa y los verbos de animación (`draw`, `type`, `rise`, `stamp`, `wipeIn`, `marker`, `count`, `grow`, `ride`, `pop`…). El lint («nada solo aparece») exige que todo entre con un verbo y que la animación termine en ≤ 11 s. |
 | `engine/styles/` | `base.css` y los 3 estilos: `harper_bazaar.css` (1), `cuaderno_davinci.css` (2), `minimalista_linea.css` (3). |
+| `styles/ANIMACION.md` | Gramática completa de animación (Frame A, nada solo aparece, catálogo por elemento, dominios, etapas, principios, descanso) traducida a los verbos del motor. |
 | `styles/ESTILOS.md` | Especificación completa de los 3 estilos (Harper's Bazaar, Da Vinci, Minimalista Línea Azul): template original literal, fondo, y su traducción a código. Fuente única de los estilos. |
 | `engine/fonts/`, `engine/vendor/` | Fuentes (OFL) y GSAP 3 con DrawSVG, SplitText y MorphSVG. |
 | `scripts/setup.sh` | Preflight: comprueba ffmpeg, Chrome y Playwright e instala pptxgenjs, sharp, lxml, pillow y numpy si faltan. |
