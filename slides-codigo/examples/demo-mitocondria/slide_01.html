@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<link rel="stylesheet" href="engine/styles/base.css">
+<link rel="stylesheet" href="engine/styles/minimalista_linea.css">
+<script src="engine/vendor/gsap.min.js"></script>
+<script src="engine/vendor/DrawSVGPlugin.min.js"></script>
+<script src="engine/vendor/SplitText.min.js"></script>
+<script src="engine/runtime.js"></script>
+<script src="mito.js"></script>
+</head><body>
+<!-- SLIDE 01 · PORTADA · cobalto · protagonista: la mitocondria en monolínea blanca -->
+<div id="stage" class="alt">
+  <svg id="mito" class="abs" style="left:510px;top:132px" width="700" height="443" viewBox="0 0 680 430"></svg>
+
+  <svg id="escala" class="abs" style="left:1010px;top:598px" width="200" height="40" viewBox="0 0 200 40">
+    <path class="line" d="M10 10 H180 M10 4 V16 M180 4 V16"/>
+  </svg>
+  <div id="escala-t" class="abs t-caption" style="left:1056px;top:620px">0.5 µm</div>
+
+  <div id="title" class="abs t-title" style="left:64px;top:110px;width:440px;font-size:76px">La mitocondria</div>
+  <div id="sub" class="abs t-label" style="left:64px;top:300px;width:400px">Central energética de la célula eucariota</div>
+  <div id="by" class="abs t-caption" style="left:64px;top:612px">Cristian Chuquin · 1 de noviembre de 2026</div>
+  <div id="spine" class="abs" style="left:1236px;top:110px;writing-mode:vertical-rl;font-size:21px;letter-spacing:.32em;font-weight:500">BIOLOGÍA CELULAR</div>
+</div>
+<script>
+Mito.build(document.getElementById("mito"));
+SC.build((S) => {
+  // Etapa 1 — el line work se traza en el orden de la mano
+  Mito.draw(S, "m-", 0.0);
+  // Etapa 2 — tipografía (golpe de título con rise, como en Cosmos)
+  const e = S.rise("#title", 4.4, { stagger: 0.045 });
+  S.type("#sub", e + 0.1, { letter: 0.03 });
+  S.drop("#spine", 6.6, { stagger: 0.035 });
+  S.draw("#escala path", 7.2, { dur: 0.6 });
+  S.type("#escala-t", 7.6, { letter: 0.05 });
+  S.type("#by", 8.2, { letter: 0.025 });
+});
+</script>
+</body></html>

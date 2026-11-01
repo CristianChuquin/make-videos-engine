@@ -1,0 +1,33 @@
+/* base.css — escenario común. El lienzo es 1280×720 CSS px y se renderiza a
+   2560×1440 (deviceScaleFactor 2): 1 px de CSS = 2 px del video.
+   Las fuentes van horneadas en el video: no dependen de la PC de Cris. */
+@font-face { font-family: "Jost"; font-weight: 300; src: url("../fonts/jost-latin-300-normal.woff2") format("woff2"); }
+@font-face { font-family: "Jost"; font-weight: 400; src: url("../fonts/jost-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Jost"; font-weight: 500; src: url("../fonts/jost-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Bodoni Moda"; font-weight: 400; src: url("../fonts/bodoni-moda-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Bodoni Moda"; font-weight: 700; src: url("../fonts/bodoni-moda-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Homemade Apple"; font-weight: 400; src: url("../fonts/homemade-apple-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Caveat"; font-weight: 400; src: url("../fonts/caveat-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Caveat"; font-weight: 600; src: url("../fonts/caveat-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 400; src: url("../fonts/inter-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 600; src: url("../fonts/inter-latin-600-normal.woff2") format("woff2"); }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1280px; height: 720px; overflow: hidden; background: #000; }
+#stage {
+  position: relative; width: 1280px; height: 720px; overflow: hidden;
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision;
+}
+#stage.alt { background: var(--bg-alt); color: var(--ink-alt); }
+.abs { position: absolute; }
+svg { overflow: visible; }
+
+/* Pisos tipográficos — el deck se proyecta / se ve a ~1270 px de ancho.
+   En CSS px del lienzo de 1280: 1 pt ≈ 1.333 px. */
+.t-title   { font-family: var(--font-title); font-size: 56px; line-height: 1.08; } /* ≥ 40 pt */
+.t-hero    { font-family: var(--font-title); font-size: 120px; line-height: 1; }
+.t-label   { font-size: 27px; line-height: 1.2; }                                   /* ≥ 20 pt */
+.t-caption { font-size: 21px; line-height: 1.25; opacity: .8; }                     /* ≥ 16 pt */
+.t-refs    { font-size: 16px; line-height: 1.35; }                                  /* ≥ 12 pt, solo referencias */

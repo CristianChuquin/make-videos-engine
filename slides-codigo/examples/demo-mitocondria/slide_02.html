@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<link rel="stylesheet" href="engine/styles/base.css">
+<link rel="stylesheet" href="engine/styles/minimalista_linea.css">
+<script src="engine/vendor/gsap.min.js"></script>
+<script src="engine/vendor/DrawSVGPlugin.min.js"></script>
+<script src="engine/vendor/SplitText.min.js"></script>
+<script src="engine/runtime.js"></script>
+<script src="mito.js"></script>
+<style>
+  .dot { fill: var(--accent); }
+  .dash { stroke-dasharray: 2 6; }
+</style>
+</head><body>
+<!-- SLIDE 02 · ESTRUCTURA · off-white · protagonista: corte con 5 rótulos + lupa sobre la ATP sintasa -->
+<div id="stage">
+  <div id="title" class="abs t-title" style="left:64px;top:44px;width:1150px">Dos membranas, dos compartimentos</div>
+
+  <!-- mitocondria: viewBox 680×430 a escala 0.8 en (70, 200) -->
+  <svg id="mito" class="abs" style="left:70px;top:200px" width="544" height="344" viewBox="0 0 680 430"></svg>
+
+  <!-- capa de rótulos y lupa, en coordenadas del lienzo -->
+  <svg class="abs" style="left:0;top:0" width="1280" height="720" viewBox="0 0 1280 720">
+    <defs><clipPath id="lupa-clip"><circle cx="1040" cy="330" r="146"/></clipPath></defs>
+    <!-- rótulos: punto · guía -->
+    <circle id="d1" class="dot" cx="254" cy="224" r="5"/><path id="l1" class="lead" d="M254 224 V176"/>
+    <circle id="d2" class="dot" cx="494" cy="360" r="5"/><path id="l2" class="lead" d="M494 360 V176"/>
+    <circle id="d3" class="dot" cx="123" cy="372" r="5"/><path id="l3" class="lead" d="M123 372 V596"/>
+    <circle id="d4" class="dot" cx="310" cy="424" r="5"/><path id="l4" class="lead" d="M310 424 V596"/>
+    <circle id="d5" class="dot" cx="571" cy="372" r="5"/><path id="l5" class="lead" d="M571 372 V596"/>
+    <!-- lupa -->
+    <path id="conector" class="lead dash" d="M470 296 C640 250 760 310 892 322"/>
+    <circle id="lupa" class="line" cx="1040" cy="330" r="150"/>
+    <g clip-path="url(#lupa-clip)">
+      <path id="bicapa" class="line thin" d="M880 382 H1200 M880 400 H1200"/>
+      <g id="lipidos"></g>
+      <ellipse id="fo" class="line" cx="1040" cy="391" rx="38" ry="16"/>
+      <path id="tallo" class="line" d="M1040 375 V300"/>
+      <path id="periferico" class="line thin" d="M1074 386 C1092 340 1088 290 1066 262"/>
+      <g id="f1"></g>
+      <path id="h-flecha" class="line" d="M975 455 C990 430 1006 418 1018 404 M1018 404 l-10 2 M1018 404 l-1 10"/>
+    </g>
+  </svg>
+
+  <div id="t1" class="abs t-label" style="left:262px;top:138px">Membrana externa</div>
+  <div id="t2" class="abs t-label" style="left:502px;top:138px">Crestas</div>
+  <div id="t3" class="abs t-label" style="left:70px;top:600px">Membrana interna</div>
+  <div id="t4" class="abs t-label" style="left:318px;top:600px">Matriz</div>
+  <div id="t5" class="abs t-label" style="left:579px;top:600px">Espacio intermembrana</div>
+  <div id="lupa-t" class="abs t-label" style="left:968px;top:492px">ATP sintasa</div>
+  <div id="h-t" class="abs t-caption" style="left:930px;top:446px">H<sup>+</sup></div>
+  <div id="foot" class="abs t-caption" style="left:880px;top:660px">Esquema · Alberts et al., 2022</div>
+</div>
+<script>
+Mito.build(document.getElementById("mito"));
+(() => {  // F1: seis subunidades en hexágono + lípidos de la bicapa
+  const NS = "http://www.w3.org/2000/svg", f1 = document.getElementById("f1"), lp = document.getElementById("lipidos");
+  for (let i = 0; i < 6; i++) { const a = Math.PI / 3 * i, c = document.createElementNS(NS, "circle");
+    c.setAttribute("class", "line"); c.setAttribute("cx", 1040 + 26 * Math.cos(a)); c.setAttribute("cy", 262 + 26 * Math.sin(a)); c.setAttribute("r", 15); f1.appendChild(c); }
+  for (let x = 888; x < 1196; x += 14) { if (x > 996 && x < 1084) continue;
+    for (const y of [376, 406]) { const c = document.createElementNS(NS, "circle"); c.setAttribute("class", "line thin"); c.setAttribute("cx", x); c.setAttribute("cy", y); c.setAttribute("r", 3); lp.appendChild(c); } }
+})();
+SC.build((S) => {
+  // Etapa 1 — el corte se traza, luego la lupa amplía una cresta
+  Mito.draw(S, "m-", 0.0, 0.7);
+  S.draw("#conector", 2.6, { dur: 0.7 });
+  S.draw("#lupa", 2.9, { dur: 0.9 });
+  S.draw("#bicapa", 3.4, { dur: 0.6 });
+  S.pop("#lipidos circle", 3.6, { dur: 0.3, stagger: 0.012 });
+  S.draw("#fo", 4.0, { dur: 0.5 });
+  S.draw("#tallo, #periferico", 4.3, { dur: 0.5, stagger: 0.15 });
+  S.pop("#f1 circle", 4.7, { stagger: 0.07 });
+  S.draw("#h-flecha", 5.2, { dur: 0.5 });
+  // Etapa 2 — tipografía: título (tracking) y los cinco rótulos en el orden de lectura
+  S.tracking("#title", 5.0, { dur: 1.0 });
+  [1, 2, 3, 4, 5].forEach((k, i) => S.rotulo(`#d${k}`, `#l${k}`, `#t${k}`, 6.0 + i * 0.6, { letter: 0.03 }));
+  S.type("#lupa-t", 9.0, { letter: 0.04 });
+  S.type("#h-t", 9.5, { letter: 0.06 });
+  S.type("#foot", 9.7, { letter: 0.02 });
+});
+</script>
+</body></html>

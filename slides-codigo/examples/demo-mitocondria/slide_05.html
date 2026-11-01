@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<link rel="stylesheet" href="engine/styles/base.css">
+<link rel="stylesheet" href="engine/styles/minimalista_linea.css">
+<script src="engine/vendor/gsap.min.js"></script>
+<script src="engine/vendor/DrawSVGPlugin.min.js"></script>
+<script src="engine/vendor/SplitText.min.js"></script>
+<script src="engine/runtime.js"></script>
+<script src="mito.js"></script>
+<style>
+  .ref { width: 900px; font-size: 21px; line-height: 1.4; }
+</style>
+</head><body>
+<!-- SLIDE 05 · REFERENCIAS · off-white · lista APA tecleada + mitocondria pequeña que se traza -->
+<div id="stage">
+  <div id="title" class="abs t-title" style="left:64px;top:44px">Referencias</div>
+  <div id="r1" class="abs ref" style="left:64px;top:170px">Alberts, B., Heald, R., Johnson, A., Morgan, D., Raff, M., Roberts, K. y Walter, P. (2022). <i>Molecular biology of the cell</i> (7.ª ed.). W. W. Norton.</div>
+  <div id="r2" class="abs ref" style="left:64px;top:290px">Anderson, S., Bankier, A. T., Barrell, B. G., et al. (1981). Sequence and organization of the human mitochondrial genome. <i>Nature, 290</i>(5806), 457–465.</div>
+  <div id="r3" class="abs ref" style="left:64px;top:410px">Nelson, D. L. y Cox, M. M. (2021). <i>Lehninger principles of biochemistry</i> (8.ª ed.). Macmillan Learning.</div>
+  <svg id="mito" class="abs" style="left:980px;top:520px" width="240" height="152" viewBox="0 0 680 430"></svg>
+</div>
+<script>
+Mito.build(document.getElementById("mito"));
+SC.build((S) => {
+  S.type("#title", 0.2, { letter: 0.06 });
+  S.type("#r1", 1.2, { letter: 0.014 });
+  S.type("#r2", 3.4, { letter: 0.014 });
+  S.type("#r3", 5.6, { letter: 0.014 });
+  Mito.draw(S, "m-", 6.6, 0.6);
+});
+</script>
+</body></html>

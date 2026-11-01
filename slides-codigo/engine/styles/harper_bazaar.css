@@ -1,0 +1,20 @@
+/* harper_bazaar — heredado de cowork-notebooklm-slides (Step 2.1.A).
+   Amarillo #CCCC00 / blanco, tinta negra, Didone en póster, halftones y
+   destellos. El fondo es la textura de textures.py (clase .bg-tex). */
+:root {
+  --bg: #CCCC00;
+  --bg-alt: #FFFFFF;
+  --ink: #000000;
+  --ink-alt: #000000;
+  --line: #000000;
+  --line-alt: #000000;
+  --accent: #CCCC00;
+  --c1: #000000; --c2: #7A7A00; --c3: #CCCC00; --c4: #FFFFFF; --c5: #000000;
+  --font-title: "Bodoni Moda", serif;
+  --font-body: "Inter", sans-serif;
+}
+.t-title { font-weight: 700; text-transform: uppercase; letter-spacing: -.02em; }
+.t-hero  { font-weight: 700; }
+.line    { fill: none; stroke: #000; stroke-width: 1.4; stroke-linecap: round; }
+.lead    { fill: none; stroke: #000; stroke-width: 1.2; }
+.bg-tex  { position: absolute; inset: 0; background-size: cover; }

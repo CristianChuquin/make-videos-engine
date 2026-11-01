@@ -14,6 +14,7 @@ Lo creó Cristian Chuquín para su pipeline de videos académicos (matemática, 
 | `shared/master.py` | Une las pistas de voz, recorta pausas largas y normaliza a −16 LUFS. Se detiene si queda algún silencio de más de 1 s. |
 | `shared/transcribe.py` | Transcripción con marcas por palabra (faster-whisper). |
 | `shared/sync.py` | Re-cronometra cada tramo del video mudo entre anclas para que dure exactamente lo que su tramo de voz (cámara lenta ≤ ×3, aceleración ≤ ×2). |
+| `slides-codigo/` | Diapositivas vivas por código: un clip de 12 s a 2K por slide, montado en un PPTX que arranca solo y se congela en la slide terminada. Tiene su propio [README](slides-codigo/README.md). |
 
 Los comentarios del código están en español.
 

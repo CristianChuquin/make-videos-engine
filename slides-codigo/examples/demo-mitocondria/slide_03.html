@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<link rel="stylesheet" href="engine/styles/base.css">
+<link rel="stylesheet" href="engine/styles/minimalista_linea.css">
+<script src="engine/vendor/gsap.min.js"></script>
+<script src="engine/vendor/DrawSVGPlugin.min.js"></script>
+<script src="engine/vendor/SplitText.min.js"></script>
+<script src="engine/runtime.js"></script>
+<style>
+  .lbl { width: 316px; text-align: right; }
+  .val { font-weight: 500; }
+  .ox  { fill: url(#grad); stroke: none; }
+  .sus { fill: none; stroke: var(--line); stroke-width: 1.6; }
+</style>
+</head><body>
+<!-- SLIDE 03 · DATOS · off-white · barras horizontales + cifra protagonista que cuenta -->
+<div id="stage">
+  <div id="title" class="abs t-title" style="left:64px;top:44px">ATP por molécula de glucosa</div>
+
+  <svg class="abs" style="left:0;top:0" width="1280" height="720" viewBox="0 0 1280 720">
+    <defs><linearGradient id="grad" x1="0" x2="1"><stop offset="0" stop-color="#2E5BFF"/><stop offset="1" stop-color="#A93DF5"/></linearGradient></defs>
+    <path id="eje" class="line" d="M400 160 V570"/>
+    <g id="bars"></g>
+    <rect id="sw1" class="ox" x="64" y="612" width="22" height="22"/>
+    <rect id="sw2" class="sus" x="340" y="612" width="22" height="22"/>
+  </svg>
+  <div id="labels"></div>
+  <div id="vals"></div>
+
+  <div id="hero" class="abs t-hero" style="left:860px;top:150px;color:var(--accent);font-size:160px">30</div>
+  <div id="hero-t" class="abs t-label" style="left:868px;top:330px">ATP por glucosa</div>
+  <div id="hero-c" class="abs t-caption" style="left:868px;top:374px;width:340px">32 con la lanzadera malato-aspartato</div>
+  <div id="hallazgo" class="abs t-label" style="left:868px;top:470px;width:380px">La cadena respiratoria<br>aporta <span id="hl">26 de 30</span></div>
+  <div id="lg1" class="abs t-caption" style="left:96px;top:610px">Fosforilación oxidativa</div>
+  <div id="lg2" class="abs t-caption" style="left:372px;top:610px">Nivel de sustrato</div>
+  <div id="foot" class="abs t-caption" style="left:868px;top:660px">Nelson y Cox, 2021</div>
+</div>
+<script>
+// Datos: Lehninger (Nelson y Cox, 2021), rendimiento con lanzadera glicerol-fosfato. Suma = 30.
+const D = [["Glucólisis · ATP", 2, "sus"], ["Glucólisis · NADH", 3, "ox"], ["Piruvato DH · NADH", 5, "ox"],
+           ["Krebs · GTP", 2, "sus"], ["Krebs · NADH", 15, "ox"], ["Krebs · FADH<sub>2</sub>", 3, "ox"]];
+if (D.reduce((a, d) => a + d[1], 0) !== 30) throw new Error("los datos no suman 30");
+const NS = "http://www.w3.org/2000/svg", K = 22, Y0 = 172, STEP = 66, H = 34;
+D.forEach(([lab, v, kind], i) => {
+  const y = Y0 + i * STEP, r = document.createElementNS(NS, "rect");
+  Object.entries({ id: `b${i}`, class: kind, x: 401, y, width: v * K, height: H }).forEach(([k, val]) => r.setAttribute(k, val));
+  document.getElementById("bars").appendChild(r);
+  document.getElementById("labels").insertAdjacentHTML("beforeend", `<div id="lb${i}" class="abs t-label lbl" style="left:64px;top:${y - 1}px">${lab}</div>`);
+  document.getElementById("vals").insertAdjacentHTML("beforeend", `<div id="v${i}" class="abs t-label val" style="left:${401 + v * K + 14}px;top:${y - 1}px">${v}</div>`);
+});
+SC.build((S) => {
+  S.wipeIn("#title", 0.2, { color: "var(--line)", dur: 0.9 });
+  // Etapa 1 — eje, barras desde la base y cada cifra viajando con su barra (2-ter)
+  S.draw("#eje", 0.9, { dur: 0.6 });
+  const bars = D.map((_, i) => `#b${i}`), vals = D.map((_, i) => `#v${i}`);
+  S.grow(bars.join(","), 1.3, { axis: "x", dur: 0.9, stagger: 0.15 });
+  S.ride(vals.join(","), D.map(([, v]) => -v * K), 1.3, { axis: "x", dur: 0.9, stagger: 0.15 });
+  // la cifra protagonista MIDE: cuenta desde cero con golpe y halo
+  S.count("#hero", 30, 2.4, { dur: 1.8 });
+  S.halo("#hero", 3.9, { size: 1.6 });
+  // Etapa 2 — etiquetas, leyenda y hallazgo
+  D.forEach((_, i) => S.type(`#lb${i}`, 3.4 + i * 0.28, { letter: 0.022 }));
+  S.type("#hero-t", 4.4, { letter: 0.035 });
+  S.type("#hero-c", 5.0, { letter: 0.022 });
+  S.pop("#sw1, #sw2", 6.0, { stagger: 0.2 });
+  S.type("#lg1", 6.2, { letter: 0.025 });
+  S.type("#lg2", 6.7, { letter: 0.025 });
+  S.type("#hallazgo", 7.4, { letter: 0.03 });
+  S.marker("#hl", 8.5, { opacity: 0.22 });
+  S.type("#foot", 9.0, { letter: 0.03 });
+});
+</script>
+</body></html>

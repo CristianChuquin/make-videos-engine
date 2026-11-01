@@ -1,0 +1,23 @@
+/* minimalista_linea — heredado de cowork-notebooklm-slides (Step 2.1.C).
+   Dos fondos planos alternando, NUNCA degradado de fondo. El degradado vive
+   solo dentro de los gráficos. Toda estructura en monolínea cobalto SIN relleno. */
+:root {
+  --bg: #F7F5F0;          /* off-white: la mayoría de slides */
+  --bg-alt: #2E5BFF;      /* cobalto: portada, break, acentos */
+  --ink: #1A2340;         /* índigo sobre off-white */
+  --ink-alt: #FFFFFF;     /* blanco sobre cobalto */
+  --line: #2E5BFF;        /* monolínea */
+  --line-alt: #FFFFFF;
+  --accent: #FF5B35;      /* UNA palabra o segmento por slide */
+  --c1: #2E5BFF; --c2: #6A4BF8; --c3: #A93DF5; --c4: #FF5B35; --c5: #1A2340;
+  --font-title: "Jost", sans-serif;
+  --font-body: "Jost", sans-serif;
+}
+.t-title { font-weight: 300; letter-spacing: .01em; }
+.t-hero  { font-weight: 300; }
+.t-label { font-weight: 400; }
+.line    { fill: none; stroke: var(--line); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.alt .line { stroke: var(--line-alt); }
+.thin    { stroke-width: 1.1; }
+.lead    { fill: none; stroke: var(--ink); stroke-width: 1.2; }
+.alt .lead { stroke: var(--ink-alt); }
