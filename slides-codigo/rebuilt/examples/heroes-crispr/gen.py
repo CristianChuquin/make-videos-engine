@@ -12,7 +12,7 @@ HEAD = """<!doctype html><html><head><meta charset="utf-8">
 <script src="engine/vendor/DrawSVGPlugin.min.js"></script>
 <script src="engine/vendor/SplitText.min.js"></script>
 <script src="engine/runtime.js"></script></head>
-<body data-break="{brk}"><div id="stage">
+<body data-break="{brk}" data-dur="{dur}"><div id="stage">
 {body}
 </div>
 <script>SC.build((S) => {{
@@ -569,22 +569,23 @@ refs = [
 ]
 colA = "".join(f'<p class="rA" style="margin-bottom:14px;padding-left:22px;text-indent:-22px">{r}</p>' for r in refs[:5])
 colB = "".join(f'<p class="rB" style="margin-bottom:14px;padding-left:22px;text-indent:-22px">{r}</p>' for r in refs[5:])
-slides[15] = dict(body=f"""
+slides[15] = dict(dur=7, body=f"""
 {T("title", 64, 48, "Referencias", "t-label")}
 <svg width="1280" height="720"><path id="r15" class="line thin" d="M64 92 L1216 92"/></svg>
 <div class="abs t-refs" style="left:64px;top:118px;width:560px;font-size:17px">{colA}</div>
 <div class="abs t-refs" style="left:656px;top:118px;width:560px;font-size:17px">{colB}</div>
 {T("cred", 64, 662, "Ilustraciones adaptadas de Bioicons: DBCLS (CC BY 4.0) y Servier Medical Art (CC BY 3.0).", "t-caption")}
 """, script="""
-  let e = S.type("#title", .2);
-  S.draw("#r15", .4, {dur:.9});
-  S.type(".rA", 1.0, {letter:.034, minLetter:.03, parallel:true, gap:.25});
-  S.type(".rB", 1.1, {letter:.034, minLetter:.03, parallel:true, gap:.25});
-  S.type("#cred", 6.6, {letter:.034, minLetter:.032});
+  // clip de 7 s (pedido de Cris): referencias en paralelo, animación ≤ 6 s
+  let e = S.type("#title", .1);
+  S.draw("#r15", .3, {dur:.6});
+  S.type(".rA", .7, {letter:.019, minLetter:.019, parallel:true, gap:.1});
+  S.type(".rB", .75, {letter:.019, minLetter:.019, parallel:true, gap:.1});
+  S.type("#cred", 3.2, {letter:.03, minLetter:.03});
 """)
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 for n, s in slides.items():
-    html = HEAD.format(brk=s.get("brk", 0), body=s["body"], script=s["script"])
+    html = HEAD.format(brk=s.get("brk", 0), dur=s.get("dur", 12), body=s["body"], script=s["script"])
     open(f"slide_{n:02d}.html", "w").write(html)
 print("ok", len(slides), "slides")
