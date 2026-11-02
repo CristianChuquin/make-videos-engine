@@ -3,7 +3,7 @@
 const { chromium } = require("playwright");
 const { spawn } = require("child_process");
 const fs = require("fs"), path = require("path");
-const FPS = 30, DUR = 12, N = FPS * DUR;
+const FPS = 30;
 
 (async () => {
   const [html, out = "clips"] = process.argv.slice(2);
@@ -18,16 +18,17 @@ const FPS = 30, DUR = 12, N = FPS * DUR;
   try { await page.waitForFunction(() => window.SC_READY === true, null, { timeout: 20000 }); }
   catch (e) { console.error(id, "NO CARGA", errs.join(" | ")); process.exit(2); }
   const info = await page.evaluate(() => window.SC_INFO);
+  const DUR = info.dur || 12, N = FPS * DUR;
   info.errors = errs;
   const isBreak = await page.evaluate(() => document.body.dataset.break === "1");
   const problems = [];
   if (info.lint.length) problems.push("aparece sin verbo: " + info.lint.join("; "));
-  if (!isBreak && info.animation_ends > 11) problems.push(`la animación termina en ${info.animation_ends} s`);
+  if (!isBreak && info.animation_ends > DUR - 1) problems.push(`la animación termina en ${info.animation_ends} s (máx ${DUR - 1})`);
   if (errs.length) problems.push("errores JS: " + errs.join(" | "));
   if (problems.length && !force) { console.error(id, "BLOQUEADO →", problems.join(" || ")); await browser.close(); process.exit(3); }
   info.forced = problems.length ? problems : undefined;
   if (process.argv.includes("--peek")) {           // revisión rápida: 6 instantes + último
-    for (const T of [1, 2.5, 4, 5.5, 7, 9, 11.99]) {
+    for (const T of [1, 2.5, 4, 5.5, 7, 9, 11.99].filter((T) => T < DUR).concat(DUR < 12 ? [DUR - 0.01] : [])) {
       await page.evaluate((T) => SC.seek(T), T);
       await page.screenshot({ path: path.join(out, `${id}_t${String(T).replace(".", "_")}.jpg`), type: "jpeg", quality: 80 });
     }

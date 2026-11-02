@@ -250,9 +250,10 @@
       await document.fonts.ready;
       fn(S);
       const ends = tl.duration();
-      tl.set({}, {}, 12);            // la línea dura 12 s
+      const DUR = +(document.body.dataset.dur || 12);
+      tl.set({}, {}, DUR);           // la línea dura DUR s (12 por defecto)
       opens.sort((a, b) => a[0] - b[0]);
-      window.SC_INFO = { animation_ends: +ends.toFixed(2), open_verb: opens.length ? opens[0][1] : "-", lint: lint() };
+      window.SC_INFO = { dur: DUR, animation_ends: +ends.toFixed(2), open_verb: opens.length ? opens[0][1] : "-", lint: lint() };
       SC.seek(0);
       window.SC_READY = true;
     },

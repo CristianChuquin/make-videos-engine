@@ -22,7 +22,15 @@ TIMING = ('<p:timing><p:tnLst><p:par><p:cTn id="1" dur="indefinite" restart="nev
  '<p:tgtEl><p:spTgt spid="{spid}"/></p:tgtEl></p:cMediaNode></p:video>'
  '</p:childTnLst></p:cTn></p:par></p:tnLst></p:timing>')
 
+import json, os
 src, dst = sys.argv[1], sys.argv[2]
+# duración por clip (ms) desde clips/NN.json → "dur"; 12 s por defecto
+durs = {}
+if len(sys.argv) > 3:
+    ids = sorted(f[:-4] for f in os.listdir(sys.argv[3]) if re.fullmatch(r"\d+\.mp4", f))
+    for k, i in enumerate(ids, 1):
+        jp = os.path.join(sys.argv[3], i + ".json")
+        durs[k] = int(1000 * json.load(open(jp)).get("dur", 12)) if os.path.exists(jp) else 12000
 zin = zipfile.ZipFile(src)
 items = {n: zin.read(n) for n in zin.namelist()}
 renames = {}
@@ -47,7 +55,7 @@ for n in list(items):
         spid = re.search(r'<p:pic>\s*<p:nvPicPr><p:cNvPr id="(\d+)"', s).group(1)
         s = re.sub(r"<p:transition.*?</p:transition>|<p:transition[^>]*/>", "", s, flags=re.S)
         s = re.sub(r"<p:timing>.*?</p:timing>", "", s, flags=re.S)
-        s = s.replace("</p:clrMapOvr>", "</p:clrMapOvr>" + TIMING.format(spid=spid, dur=12000), 1)
+        s = s.replace("</p:clrMapOvr>", "</p:clrMapOvr>" + TIMING.format(spid=spid, dur=durs.get(int(re.search(r"slide(\d+)\.xml", n).group(1)), 12000)), 1)
         assert 'display="0"' not in s
         items[n] = s.encode()
         n_vid += 1
