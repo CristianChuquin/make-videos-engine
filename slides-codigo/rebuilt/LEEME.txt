@@ -1,0 +1,8 @@
+Motor slides-codigo reconstruido desde cero el 1-nov-2026 (corrida The Heroes of CRISPR).
+Uso en la nube:
+  mkdir build && copiar engine/ dentro; npm i gsap@3.13.0 pptxgenjs@3.12.0 (vendor y fuentes ya incluidos)
+  node engine/render_clip.js slide_NN.html clips [--peek] [--force]
+  node engine/build_pptx.js clips deck_raw.pptx "Título"
+  python3 engine/inject_media.py deck_raw.pptx "<Tema>.pptx"
+bank.py espera Bioicons clonado en /home/claude/bancos/bioicons (git sparse static/icons).
+examples/heroes-crispr/gen.py = generador de las 15 slides (patrón para decks nuevos).
